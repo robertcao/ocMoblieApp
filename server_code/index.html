@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>CMPE295A Demo</title>
+  <style type="text/css">
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    #videos {
+      position: absolute;
+      left: 20%;
+      top: 0;
+      bottom: 10%;
+      right: 10%;
+      overflow: 0;
+    }
+
+    #videos video {
+      display: inline-block;
+      width: 30%;
+    }
+
+    #chat {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 30%;
+      border: 1px solid #0f0f0f;
+    }
+    #chat .msgIpt, #chat .fileIpt{
+      position: absolute;
+      left: 0;
+      width: 80%;
+    }
+    #chat .sendBtn, #chat .sendFileBtn {
+      position: absolute;
+      left: 80%;
+      width: 20%;
+    }
+    #chat .msgIpt,#chat .sendBtn {
+      bottom: 0;
+    }
+    #chat .fileIpt, #chat .sendFileBtn {
+      bottom: 30px;
+    }
+
+    #chat .msgs {
+      padding: 5%;
+    }
+    #chat .msgs p{
+      margin: 0.3em 0;
+    }
+    #files {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 20%;
+    }
+    #files .name {
+    }
+    #files .percent {
+      font-weight: bold;
+      text-decoration: none
+    }
+  </style>
+</head>
+<body>
+  <div id="videos">
+    <video id="me" autoplay></video>
+  </div>
+</body>
+<script type="text/javascript" src="/video_client.js"></script>
+<script type="text/javascript">
+  var videos = document.getElementById("videos");
+  var rtc = ClassVideo();
+  
+
+  rtc.on("connected", function(socket) {
+    rtc.createStream({
+      "video": true,
+      "audio": true
+    });
+  });
+
+  rtc.on("stream_created", function(stream) {
+    document.getElementById('me').src = URL.createObjectURL(stream);
+    document.getElementById('me').play();
+  });
+
+  rtc.on("stream_create_error", function() {
+    alert("create stream failed!");
+  });
+
+  rtc.on('pc_add_stream', function(stream, socketId, firstID) {
+    var newVideo = document.createElement("video"),
+        id = "other-" + socketId;
+    newVideo.setAttribute("class", "other");
+    newVideo.setAttribute("autoplay", "autoplay");   
+    newVideo.setAttribute("id", id);
+    videos.appendChild(newVideo);
+    rtc.attachStream(stream, id);
+  });
+
+  rtc.on('remove_peer', function(socketId) {
+    var video = document.getElementById('other-' + socketId);
+    if(video){
+      video.parentNode.removeChild(video);
+    }
+  });
+
+  rtc.on('data_channel_message', function(channel, socketId, message){
+    var p = document.createElement("p");
+    p.innerText = socketId + ": " + message;
+    msgs.appendChild(p);
+  });
+
+  rtc.connect("ws:" + window.location.href.substring(window.location.protocol.length).split('#')[0], window.location.hash.slice(1));
+</script>
+</html>

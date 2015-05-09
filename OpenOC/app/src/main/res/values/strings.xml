@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Online Community</string>
+    <string name="login_caps">LOGIN</string>
+    <string name="sign_up_caps">SIGNUP</string>
+    <string name="or">OR</string>
+    <string name="name_hint">Name</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="title_activity_mycourse">My Course</string>
+    <string name="text_current">Current</string>
+    <string name="text_upcoming">Upcoming</string>
+    <string name="text_teach">Teach</string>
+    <string name="course1_title">Software Testing</string>
+    <string name="course1_teacher">Zhenyu Chen</string>
+    <string name="course2_title">Programming in Python</string>
+    <string name="course2_teacher">Woolly Rhino</string>
+    <string name="course3_title">Cloud Computing</string>
+    <string name="course3_teacher">Kevin Wayne</string>
+    <string name="course4_title">Programming in Java</string>
+    <string name="course4_teacher">Roderick Bates</string>
+    <string name="course5_title">Big Data Application</string>
+    <string name="course5_teacher">Werner Krauth</string>
+    <string name="course6_title">How to make Bracelet</string>
+    <string name="text_createcourse">Create Your Own Course</string>
+    <string name="title_activity__inclass">In Class</string>
+    <string name="title_activity_create_course">Create New Course</string>
+    <string name="action_settings">Settings</string>
+</resources>
